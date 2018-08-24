@@ -1,4 +1,5 @@
-const maxAttempts = 5;
+import { MAX_ATTEMPTS } from '../../constants/api';
+
 const attempts = {};
 
 /**
@@ -37,9 +38,21 @@ export default store => next => (action) => {
         // Increment attempts
         attempts[action.type] = attempts[action.type] ? attempts[action.type] + 1 : 1;
 
-        if (attempts[action.type] <= maxAttempts) {
-          store.dispatch(action);
+        if (attempts[action.type] <= MAX_ATTEMPTS) {
+          return store.dispatch(action);
         }
+
+        // Let the user retry explicitly
+        attempts[action.type] = 0;
+
+        if (global.confirm('These aren\'t the drones you\'re looking for... Try again?')) {
+          return store.dispatch(action);
+        }
+
+        // Complete the action, unfulfilled
+        return store.dispatch({
+          type: `${action.type}_UNFULFILLED`,
+        });
       });
   }
 

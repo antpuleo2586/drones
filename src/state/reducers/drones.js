@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
     case FETCH_ALL_DRONES_FULFILLED:
       return {
         ...state,
-        all: action.payload,
+        all: action.payload || [],
       };
     default:
       return state;

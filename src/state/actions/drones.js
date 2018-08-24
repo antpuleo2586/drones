@@ -9,7 +9,7 @@ export const fetchAllDrones = () => ({
     isHttp: true,
   },
   async payload() {
-    const { data } = await axios.get(`${API_URL}/drones`);
+    const { data } = await axios.get(`${API_URL}/drones?time=${new Date().getTime()}`);
 
     return data.map(element => new Drone(element));
   },
