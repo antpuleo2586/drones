@@ -5,13 +5,15 @@ import { getAllDrones } from '../state/selectors/drones';
 import { fetchAllDrones } from '../state/actions/drones';
 import Loader from './Loader';
 import Empty from './Empty';
-import DroneComponent from './DroneComponent';
+import Drones from './Drones';
 import Drone from '../models/Drone';
 import { isLoading } from '../state/selectors/loading';
 import AppTitle from './AppTitle';
 import AppWrapper from './AppWrapper';
+import FilterButton from './FilterButton';
+import FilterSelect from './FilterSelect';
 
-class App extends PureComponent {
+export class App extends PureComponent {
   componentDidMount() {
     this.props.fetchAllDrones();
   }
@@ -21,14 +23,20 @@ class App extends PureComponent {
       return <Loader />;
     }
 
-    if (this.props.drones.length === 0) {
-      return <Empty />;
-    }
-
     return (
       <AppWrapper>
         <AppTitle title="Welcome to Bobs Epic Drone Shack Inc" />
-        { this.props.drones.map(drone => (<DroneComponent key={drone.droneId} drone={drone} />))}
+        <FilterSelect />
+        <FilterButton />
+        {
+          this.props.drones.length > 0
+            ? (
+              <Drones drones={this.props.drones} />
+            )
+            : (
+              <Empty />
+            )
+          }
       </AppWrapper>
     );
   }

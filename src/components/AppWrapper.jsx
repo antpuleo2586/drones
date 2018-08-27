@@ -6,6 +6,7 @@ const AppWrapper = (props) => {
   const Wrapper = styled.div`    
     width: 700px;
     margin: auto; 
+    text-align: center;
   `;
 
   return <Wrapper>{props.children}</Wrapper>;
