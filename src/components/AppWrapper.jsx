@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const AppWrapper = (props) => {
   const Wrapper = styled.div`    
-    width: 700px;
+    width: 100%;
     margin: auto; 
     text-align: center;
   `;
